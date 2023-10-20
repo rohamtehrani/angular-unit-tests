@@ -30,4 +30,8 @@ describe('TomanPipe', () => {
   it('Doesn\'t mess with "0"', () => {
     expect(pipe.transform("0")).toEqual(0);
   })
+
+  it('Should return zero if received null', () => {
+    expect(pipe.transform(null)).toEqual(0);
+  })
 });

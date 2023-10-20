@@ -5,7 +5,8 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class TomanPipe implements PipeTransform {
 
-  transform(value: number | string): number {
+  transform(value: any): number {
+    if (value === null || value === undefined) return 0;
     return Math.floor(+value / 10);
   }
 
