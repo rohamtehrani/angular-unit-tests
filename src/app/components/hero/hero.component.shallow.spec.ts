@@ -3,6 +3,7 @@
 import { ComponentFixture, TestBed } from "@angular/core/testing"
 import { HeroComponent } from "./hero.component"
 import { RouterTestingModule } from "@angular/router/testing";
+import { By } from "@angular/platform-browser";
 
 describe('HeroComponent (shallow tests)', () => {
     let fixture: ComponentFixture<HeroComponent>;
@@ -24,6 +25,30 @@ describe('HeroComponent (shallow tests)', () => {
         };
 
         expect(fixture.componentInstance.hero.name).toEqual('Dude');
+    })
+
+    it('should render the hero name in an anchor tag', () => {
+        fixture.componentInstance.hero = {
+            id: 1,
+            name: 'SuperDude',
+            strength: 4
+        };
+        fixture.detectChanges();
+
+        expect(fixture.nativeElement.querySelector('a').textContent)
+            .toContain('SuperDude');
+    })
+
+    it('should render the hero name in an anchor tag 2', () => {
+        fixture.componentInstance.hero = {
+            id: 1,
+            name: 'SuperDude',
+            strength: 4
+        };
+        fixture.detectChanges();
+
+        let de = fixture.debugElement.query(By.css('a'));
+        expect(de.nativeElement.textContent).toContain('SuperDude');
     })
 })
 
