@@ -1,21 +1,34 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { Hero } from 'src/app/models/hero';
 import { HeroesComponent } from './heroes.component';
+import { of } from 'rxjs';
 
 describe('HeroesComponent', () => {
   let component: HeroesComponent;
-  let fixture: ComponentFixture<HeroesComponent>;
+  let HEROES: Hero[] = [];
+  let mockHeroService: any;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({
-      declarations: [HeroesComponent]
-    });
-    fixture = TestBed.createComponent(HeroesComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
+    HEROES = [
+      {id: 1, name: 'SpiderDude', strength: 8},
+      {id: 2, name: 'WonderFull', strength: 24},
+      {id: 3, name: 'SuperDude', strength: 55},
+    ];
+
+    mockHeroService = jasmine.createSpyObj([
+      'getHeroes',
+      'addHero',
+      'deleteHero'
+    ]);
+
+    component = new HeroesComponent(mockHeroService);
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
+  it('delete hero', () => {
+    mockHeroService.deleteHero.and.returnValue(of(true));
+    component.heroes = HEROES;
+
+    component.delete(HEROES[0]);
+
+    expect(component.heroes.length).toBe(2);
   });
 });
