@@ -1,5 +1,6 @@
 import { Location } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
+import { tick } from '@angular/core/testing';
 import { ActivatedRoute } from '@angular/router';
 import { Hero } from 'src/app/models/hero';
 import { HeroService } from 'src/app/services/hero.service';
@@ -34,9 +35,17 @@ export class HeroDetailComponent implements OnInit {
   }
 
   save(): void {
-    setTimeout(() => {
+    var p = new Promise<void>((resolve) => {
       this.heroService.updateHero(this.hero)
-      .subscribe(() => this.goBack());
-    }, 250)
+        .subscribe(() => this.goBack())
+      resolve();
+    })
   }
+
+  // save(): void {
+  //   setTimeout(() => {
+  //     this.heroService.updateHero(this.hero)
+  //     .subscribe(() => this.goBack());
+  //   }, 250)
+  // }
 }
